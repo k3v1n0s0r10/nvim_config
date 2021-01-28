@@ -19,6 +19,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'easymotion/vim-easymotion'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'tasn/vim-tsx'
 
 " Theme
 Plug 'morhetz/gruvbox'
