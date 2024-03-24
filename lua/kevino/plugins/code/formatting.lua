@@ -1,8 +1,19 @@
+-- Command to format with conform
+vim.api.nvim_create_user_command('Format', function(args)
+  local range = nil
+  if args.count ~= -1 then
+    local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+    range = {
+      start = { args.line1, 0 },
+      ['end'] = { args.line2, end_line:len() },
+    }
+  end
+  require('conform').format { async = true, lsp_fallback = true, range = range }
+end, { range = true })
+
 return {
   { -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help ibl`
     main = 'ibl',
     opts = {},
   },
@@ -15,22 +26,28 @@ return {
     'stevearc/conform.nvim',
     opts = {
       notify_on_error = false,
-      format_on_save = function(bufnr)
-        local disable_filetypes = {
-          --[[c = true, cpp = true ]]
-        }
-        return {
-          timeout_ms = 500,
-          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-        }
-      end,
+      -- format_on_save = function(bufnr)
+      --   local disable_filetypes = {
+      --     --[[c = true, cpp = true ]]
+      --   }
+      --   return {
+      --     timeout_ms = 500,
+      --     lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+      --   }
+      -- end,
 
       formatters_by_ft = {
-        lua = { 'stylua' },
         -- Conform can run multiple formatters sequentially
         -- python = { "isort", "black" },
         -- sub-list tells conform to run *until* a formatter is found.
         -- javascript = { { "prettierd", "prettier" } },
+        lua = { 'stylua' },
+        javascript = { { 'prettierd', 'prettier' } },
+        typescript = { { 'prettierd', 'prettier' } },
+        json = { { 'prettierd', 'prettier' } },
+        typescriptreact = { { 'prettierd', 'prettier' } },
+        typescriptjavascript = { { 'prettierd', 'prettier' } },
+        rust = { 'rustfmt' },
       },
     },
   },
