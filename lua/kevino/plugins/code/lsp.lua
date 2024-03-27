@@ -49,37 +49,41 @@ return {
 
     local servers = {
       tsserver = {
-        -- currently the vue ts plugin is not loading properly (turning hybrid off for now)
-        -- init_options = {
-        --   plugins = {
-        --     {
-        --       name = '@vue/typescript-plugin',
-        --       location = '~/.nvm/versions/node/v20.11.1/lib/node_modules/@vue/language-server',
-        --       languages = { 'vue' },
-        --     },
-        --   },
-        -- },
-      },
-      volar = {
-        filetypes = { 'vue' },
         init_options = {
-          vue = {
-            hybridMode = false
-          }
-        }
+          plugins = {
+            {
+              name = '@vue/typescript-plugin',
+              location = '/home/kevino/.nvm/versions/node/v20.11.1/lib/node_modules/@vue/typescript-plugin/index.js',
+              languages = { 'vue' },
+            },
+          },
+        },
+        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
       },
-      rust_analyzer = {}
+      volar = {},
     }
 
     require('mason').setup()
-    require('mason-lspconfig').setup({
-      automatic_installation = true
-    })
+    require('mason-lspconfig').setup()
     require('mason-lspconfig').setup_handlers {
       function(server_name)
         local server = servers[server_name] or {}
+        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
         require('lspconfig')[server_name].setup(server)
       end,
+    }
+
+    -- use rust version lsp
+    require('lspconfig').rust_analyzer.setup {
+      rust_analyzer = {
+        capabilities = capabilities,
+        cmd = {
+          'rustup',
+          'run',
+          'stable',
+          'rust_analyzer',
+        },
+      },
     }
   end,
 }
