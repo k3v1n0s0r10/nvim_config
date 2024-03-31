@@ -7,13 +7,26 @@ return {
     opts = {},
   },
   { 'tpope/vim-sleuth' }, -- Detect tabstop and shiftwidth automatically
-  { -- "gc" to comment visual regions/lines
-    'numToStr/Comment.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    opts = {}
+  {
+    'terrortylor/nvim-comment',
+    keys = {
+      {'<leader>cc', ':CommentToggle<cr>', mode = {"n", "v"} , desc = '[C]ode [C]omment'}
+    },
+    config = function ()
+      require('nvim_comment').setup({ create_mappings = false })
+    end
   },
   { -- Autoformat
     'stevearc/conform.nvim',
+    keys = {
+      {
+        '<leader>cf',
+        function()
+          require('conform').format { async = true, lsp_fallback = true }
+        end,
+        desc = '[C]ode [F]ormat',
+      },
+    },
     opts = {
       notify_on_error = false,
       formatters_by_ft = {
@@ -34,15 +47,6 @@ return {
   {
     'windwp/nvim-autopairs',
     dependencies = { 'hrsh7th/nvim-cmp' },
-    keys = {
-      {
-        '<leader>cf',
-        function()
-          require('conform').format { async = true, lsp_fallback = true }
-        end,
-        desc = '[C]ode [F]ormat',
-      },
-    },
     config = function()
       require('nvim-autopairs').setup {}
       -- If you want to automatically add `(` after selecting a function or method
