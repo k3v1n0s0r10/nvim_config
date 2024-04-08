@@ -53,14 +53,19 @@ return {
           plugins = {
             {
               name = '@vue/typescript-plugin',
-              location = '/home/kevino/.nvm/versions/node/v20.11.1/lib/node_modules/@vue/typescript-plugin/index.js',
+              location = '/home/kevino/.nvm/versions/node/v20.12.1/lib/node_modules/@vue/typescript-plugin/index.js',
               languages = { 'vue' },
             },
           },
         },
-        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
       },
-      volar = {},
+      volar = {
+        init_options = {
+          vue = {
+            hybridMode = false
+          }
+        }
+      },
     }
 
     require('mason').setup()
