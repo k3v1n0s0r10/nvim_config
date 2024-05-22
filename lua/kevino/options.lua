@@ -72,5 +72,5 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.opt.spell = true
-vim.opt.spelllang = { 'en', 'es' }
+-- vim.opt.spell = true
+-- vim.opt.spelllang = { 'en', 'es' }
