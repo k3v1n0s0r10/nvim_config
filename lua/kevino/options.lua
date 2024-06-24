@@ -74,3 +74,10 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.opt.spell = true
 vim.opt.spelllang = { 'en', 'es' }
+
+vim.opt.shiftwidth = 4
+vim.opt.smarttab = true
+vim.opt.expandtab = true
+
+vim.opt.tabstop = 8
+vim.opt.softtabstop = 0

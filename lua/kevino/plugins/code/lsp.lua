@@ -77,18 +77,5 @@ return {
         require('lspconfig')[server_name].setup(server)
       end,
     }
-
-    -- use rust version lsp
-    require('lspconfig').rust_analyzer.setup {
-      rust_analyzer = {
-        capabilities = capabilities,
-        cmd = {
-          'rustup',
-          'run',
-          'stable',
-          'rust_analyzer',
-        },
-      },
-    }
   end,
 }
